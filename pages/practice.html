@@ -60,6 +60,51 @@
             background-color: var(--bg-primary);
             margin-top: 1rem;
         }
+
+        /* ===== Responsive fixes ===== */
+        @media (max-width: 992px) {
+            .sandbox-layout {
+                grid-template-columns: 260px 1fr;
+                gap: 1.25rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sandbox-layout {
+                grid-template-columns: 1fr;
+            }
+            .instruction-panel,
+            .workspace-frame-wrapper {
+                padding: 1.25rem;
+            }
+            .task-item {
+                font-size: 0.95rem;
+            }
+            .embedded-simulator-box {
+                padding: 1.5rem 1rem;
+            }
+            .embedded-simulator-box .btn {
+                width: 100%;
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sandbox-layout {
+                gap: 1rem;
+            }
+            .instruction-panel,
+            .workspace-frame-wrapper {
+                padding: 1rem;
+                border-radius: var(--radius-sm);
+            }
+            #taskPromptTarget h2 {
+                font-size: 1.15rem !important;
+            }
+            #taskPromptTarget p {
+                font-size: 0.9rem !important;
+            }
+        }
     </style>
 </head>
 <body>
