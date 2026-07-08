@@ -84,13 +84,16 @@ code {
 
 /* ---------- Navbar ---------- */
 .site-header {
-  position: sticky; top: 0; z-index: 900;
-  height: var(--nav-h);
-  background-color: rgba(var(--paper-raise), 0.85);
-  background: color-mix(in srgb, var(--paper) 85%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
+  position: fixed; /* इसे fixed रखें */
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: transform 0.3s ease-in-out; /* स्मूथ एनिमेशन के लिए */
+}
+
+/* जब यह क्लास एक्टिव होगी तो नेवबार ऊपर छिप जाएगा */
+.site-header.nav-hidden {
+  transform: translateY(-100%);
 }
 
 .navbar {
@@ -403,3 +406,34 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
 
+/* छिपी हुई यूटिलिटी क्लास जो सर्च फ़िल्टर में इस्तेमाल हो रही है */
+.hide {
+  display: none !important;
+}
+
+/* मोबाइल और टैबलेट के लिए बेहतर ग्रिड कंट्रोल */
+@media (max-width: 850px) {
+  .layout {
+    grid-template-columns: 1fr !important; /* साइडबार को नीचे धकेल कर मेन कंटेंट को पूरी जगह देगा */
+    gap: 1.5rem;
+  }
+  
+  /* सभी ग्रिड्स को मोबाइल पर सिंगल कॉलम करना */
+  .grid-2, .grid-3, .error-grid, .shortcut-grid, .download-grid, .feedback-section, .footer-top {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* मोबाइल पर टेबल को स्क्रोल करने योग्य बनाना ताकि स्क्रीन से बाहर न जाए */
+  .table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* कंप्यूटर पर बटन छिपा रहेगा */
+#menuToggleBtn { display: none; }
+
+@media (max-width: 850px) {
+  /* मोबाइल पर बटन दिखाई देगा */
+  #menuToggleBtn { display: inline-block; }
+}
