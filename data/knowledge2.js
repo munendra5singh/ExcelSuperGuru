@@ -1,6 +1,5 @@
 /* ==========================================================================
-   ExcelSuperGuru — Knowledge Hub Interactions
-   Modular, production-ready, safe DOM element binding with robust theme engine.
+   ExcelSuperGuru — Knowledge Hub Interactions (Production Patch)
    ========================================================================== */
 (function () {
   "use strict";
@@ -13,7 +12,7 @@
   };
 
   /* ---------------------------------------------------------------------
-      Theme Engine (Light / Dark) — Cleaned up state machine
+      Theme Engine (Light / Dark) — Optimized State Machine
   --------------------------------------------------------------------- */
   const themeToggle = document.getElementById("themeToggle");
   
@@ -38,11 +37,34 @@
   })();
 
   if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      // Current system data attribute check
-      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      applyTheme(isDark ? "light" : "dark");
+    themeToggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      applyTheme(nextTheme);
     });
+  }
+
+  /* ---------------------------------------------------------------------
+      Smart Navbar Animation Engine (Hide on Scroll Down, Show on Scroll Up)
+  --------------------------------------------------------------------- */
+  let lastScrollTop = 0;
+  const header = document.querySelector('.site-header');
+
+  if (header) {
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop > lastScrollTop && scrollTop > 100) {
+        // स्क्रॉल डाउन: नेवबार छुपाएं
+        header.classList.add('nav-hidden');
+      } else {
+        // स्क्रॉल अप: नेवबार वापस दिखाएं
+        header.classList.remove('nav-hidden');
+      }
+      
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    }, { passive: true });
   }
 
   /* ---------------------------------------------------------------------
@@ -108,7 +130,6 @@
             tocLinks.forEach((l) => l.classList.remove("active"));
             if (link) {
               link.classList.add("active");
-              // Center align side navigation active item gracefully
               link.scrollIntoView({ behavior: "smooth", block: "nearest" });
             }
             trackRecentlyViewed(entry.target);
@@ -222,18 +243,9 @@
   });
 
   /* ---------------------------------------------------------------------
-      Mobile Navigation Engine (Safe Handling)
+      Mobile Navigation Engine (Safe Handling — Fixed Conflict)
   --------------------------------------------------------------------- */
-  const menuBtn = document.getElementById("themeToggle"); // Re-wired or safe element fallback
   const tocSidebar = document.getElementById("tocSidebar");
-  
-  if (menuBtn && tocSidebar) {
-    menuBtn.addEventListener("contextmenu", (e) => {
-      // Hidden trigger or alternative shortcut helper if explicit menu button absent
-      e.preventDefault();
-      tocSidebar.classList.toggle("open");
-    });
-  }
   
   tocLinks.forEach((a) =>
     a.addEventListener("click", () => {
@@ -400,7 +412,7 @@
       const thanks = document.getElementById("feedbackThanks");
       if (thanks) thanks.hidden = false;
     });
-  });ss
+  });
 
   const newsletterForm = document.getElementById("newsletterForm");
   if (newsletterForm) {
@@ -412,3 +424,13 @@
     });
   }
 })();
+
+
+const menuToggleBtn = document.getElementById("menuToggleBtn");
+const tocSidebar = document.getElementById("tocSidebar");
+
+if (menuToggleBtn && tocSidebar) {
+  menuToggleBtn.addEventListener("click", () => {
+    tocSidebar.classList.toggle("open");
+  });
+}
